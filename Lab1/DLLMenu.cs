@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace Lab1
 {
-    public class Program
+    public class DLLMenu
     {
-        static void Main(string[] agrs)
-        {
-            bool showMenu = true;
-            while (showMenu)
-            {
-                showMenu = Menu();
-            }
-        }
+        // static void Main(string[] agrs)
+        // {
+        //     bool showMenu = true;
+        //     while (showMenu)
+        //     {
+        //         showMenu = Menu();
+        //     }
+        // }
 
         private static Dictionary<string, DoubleLinkedList<float>>? Lists = new();
 
