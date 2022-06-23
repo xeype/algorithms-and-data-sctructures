@@ -107,5 +107,68 @@ namespace Lab5
 
             return index < length ? index : -1;
         }
+
+        public void KMPSearch(string patt, string txt)
+        {
+            int m = patt.Length;
+            int n = txt.Length;
+
+            int[] longPrefSuf = new int[m];
+            int j = 0;
+
+            CalculateLongPrefSuf(patt, m, longPrefSuf);
+
+            int i = 0;
+            while (i < n)
+            {
+                if (patt[j] == txt[i])
+                {
+                    j++;
+                    i++;
+                }
+
+                if (j == m)
+                {
+                    Console.Write("Pattern found "
+                                  + "at index " + (i - j));
+                    j = longPrefSuf[j - 1];
+                }
+
+                else if (i < n && patt[j] != txt[i])
+                {
+                    if (j != 0)
+                        j = longPrefSuf[j - 1];
+                    else
+                        i = i + 1;
+                }
+            }
+        }
+
+        private void CalculateLongPrefSuf(string patt, int m, int[] longPrefSuf)
+        {
+            int len = 0;
+            int i = 1;
+            longPrefSuf[0] = 0;
+
+            while (i < m)
+            {
+                if (patt[i] == patt[len])
+                {
+                    len++;
+                    longPrefSuf[i] = len;
+                    i++;
+                }
+                else
+                {
+                    if (len != 0)
+                        len = longPrefSuf[len - 1];
+                    else
+                    {
+                        longPrefSuf[i] = len;
+                        i++;
+                    }
+                }
+            }
+        }
     }
 }

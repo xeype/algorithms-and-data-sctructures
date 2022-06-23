@@ -18,17 +18,25 @@ public class Program
         Console.WriteLine("Rand 1000 index: " + algo.LinearSearch(rand1000, 60));
         Console.WriteLine("Rand 10_000 index: " + algo.LinearSearch(rand10000, 60));
         Console.WriteLine("========================");
-        
-        
+
+
         Console.WriteLine("===== Binary Search =====");
         Console.WriteLine("Rand 1000 index: " + algo.BinarySearch(rand1000, 60));
         Console.WriteLine("Rand 10_000 index: " + algo.BinarySearch(rand10000, 60));
         Console.WriteLine("========================");
-        
+
         Console.WriteLine("===== Break Search =====");
         Console.WriteLine("Rand 1000 index: " + algo.BreakSearch(rand1000, 60));
         Console.WriteLine("Rand 10_000 index: " + algo.BreakSearch(rand10000, 60));
         Console.WriteLine("========================");
+
+
+        string txt =
+            "The old man was bent into a capital C, his head leaning so far forward that his beard nearly touched his knobby knees.";
+        string pattern = "head";
+
+        Console.WriteLine("===== Knuth-Morris-Pratt Search =====");
+        algo.KMPSearch(pattern, txt);
     }
 
     static int[] FillRand(int[] arr)
