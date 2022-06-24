@@ -129,8 +129,8 @@ namespace Lab5
 
                 if (j == m)
                 {
-                    Console.Write("Pattern found "
-                                  + "at index " + (i - j));
+                    Console.WriteLine("Pattern found "
+                                      + "at index " + (i - j));
                     j = longPrefSuf[j - 1];
                 }
 
@@ -167,6 +167,98 @@ namespace Lab5
                         longPrefSuf[i] = len;
                         i++;
                     }
+                }
+            }
+        }
+
+        private static int COUNT_OF_CHARS = 256;
+
+        private static int Max(int a, int b)
+        {
+            return (a > b) ? a : b;
+        }
+
+        static void BadCharHeuristic(char[] str, int size, int[] badChar)
+        {
+            int i;
+            for (i = 0; i < size; i++)
+                badChar[i] = -1;
+
+            for (i = 0; i < size; i++)
+                badChar[(int) str[i]] = i;
+        }
+
+        public void BMSearch(string pattern, string text)
+        {
+            char[] txt = text.ToCharArray();
+            char[] pat = pattern.ToCharArray();
+
+            int m = pat.Length;
+            int n = txt.Length;
+
+            int[] badChar = new int[COUNT_OF_CHARS];
+
+            BadCharHeuristic(pat, m, badChar);
+
+            int s = 0;
+
+            while (s <= (n - m))
+            {
+                int j = m - 1;
+                while (j >= 0 && pat[j] == txt[s + j]) j--;
+
+                if (j < 0)
+                {
+                    Console.WriteLine("Pattern found at index: " + s);
+                    s += (s + m < n) ? m - badChar[txt[s + m]] : 1;
+                }
+                else
+                {
+                    s += Max(1, j - badChar[txt[s + j]]);
+                }
+            }
+        }
+
+        public void RKSearch(string pattern, string text, int q)
+        {
+            int m = pattern.Length;
+            int n = text.Length;
+            int i, j;
+            int patHash = 0;
+            int txtHash = 0;
+            int h = 1;
+
+            for (i = 0; i < m - 1; i++)
+            {
+                h = (h * COUNT_OF_CHARS) % q;
+            }
+
+            for (i = 0; i < m; i++)
+            {
+                patHash = (COUNT_OF_CHARS * patHash + pattern[i]) % q;
+                txtHash = (COUNT_OF_CHARS * txtHash + text[i]) % q;
+            }
+
+            for (i = 0; i <= n - m; i++)
+            {
+                if (patHash == txtHash)
+                {
+                    for (j = 0; j < m; j++)
+                    {
+                        if (text[i + j] != pattern[j])
+                            break;
+                    }
+
+                    if (j == m)
+                        Console.WriteLine("Pattern found at index: " + i);
+                }
+
+                if (i < n - m)
+                {
+                    txtHash = (COUNT_OF_CHARS * (txtHash - text[i] * h) + text[i + m] % q);
+
+                    if (txtHash < 0)
+                        txtHash = (txtHash + q);
                 }
             }
         }
