@@ -138,14 +138,12 @@ namespace Lab2
                 tmp.Push(item);
             }
 
-            tmp.Pop();
+            var temp = tmp.Peek();
 
             count = 0;
             head = null;
-            foreach (var item in tmp)
-            {
-                Push(item);
-            }
+            
+            Push(temp);
         }
 
         public void DeleteAllButTheFirst()
@@ -162,20 +160,11 @@ namespace Lab2
                 tmp2.Push(item);
             }
 
-            tmp2.Pop();
-
-            tmp = new();
-            foreach (var item in tmp2)
-            {
-                tmp.Push(item);
-            }
+            var element = tmp2.Peek();
 
             count = 0;
             head = null;
-            foreach (var item in tmp)
-            {
-                Push(item);
-            }
+            Push(element);
         }
 
         public void DeleteMin()
